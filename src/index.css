@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #050814;
+    color: #e2e8f0;
+    overflow-x: hidden;
+  }
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+.font-outfit {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Subtle prismatic glow effects */
+.prism-glow {
+  box-shadow: 0 0 35px -5px rgba(99, 102, 241, 0.35), 0 0 15px -2px rgba(168, 85, 247, 0.25);
+}
+
+.prism-glow-intense {
+  box-shadow: 0 0 45px rgba(129, 140, 248, 0.45), 0 0 80px rgba(59, 130, 246, 0.25);
+}
+
+.prism-border {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+  backdrop-filter: blur(12px);
+}
+
+.prism-gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 30%, #93c5fd 60%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.prism-gold-text {
+  background: linear-gradient(135deg, #fef08a 0%, #facc15 50%, #ca8a04 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #090d20;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
