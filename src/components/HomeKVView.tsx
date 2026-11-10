@@ -5,7 +5,7 @@ import { Send, Sparkles, MapPin, Calendar, Award } from 'lucide-react';
 interface HomeKVViewProps {
   onStartFeedback: () => void;
   onOpenAdmin: () => void;
-  partners: [PartnerConfig, PartnerConfig, PartnerConfig];
+  partners: PartnerConfig[];
   eventName: string;
   eventDate: string;
   eventVenue: string;

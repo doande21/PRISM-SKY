@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { FeedbackItem, AppSettings, PartnerConfig } from '../types/index.ts';
 import { exportFeedbacksToCSV, exportFeedbacksQuickCSV, copyForGoogleSheets } from '../utils/exportCsv.ts';
-import { APPS_SCRIPT_TEMPLATE, USER_TARGET_SHEET_URL, sendFeedbackToGoogleSheet } from '../utils/googleSheetSync.ts';
+import { APPS_SCRIPT_TEMPLATE, USER_TARGET_SHEET_URL, DEFAULT_WEBHOOK_URL, sendFeedbackToGoogleSheet } from '../utils/googleSheetSync.ts';
 import { 
   Shield, 
   X, 
@@ -66,23 +66,19 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   const [copiedSheetData, setCopiedSheetData] = useState(false);
 
   const [sheetUrlInput, setSheetUrlInput] = useState(settings.googleSheetUrl || USER_TARGET_SHEET_URL);
-  const [webhookUrlInput, setWebhookUrlInput] = useState(settings.webhookUrl || '');
+  const [webhookUrlInput, setWebhookUrlInput] = useState(settings.webhookUrl || DEFAULT_WEBHOOK_URL);
   const [isOpenSurvey, setIsOpenSurvey] = useState(settings.isOpen);
   const [copiedScript, setCopiedScript] = useState(false);
   const [isTestingWebhook, setIsTestingWebhook] = useState(false);
   const [testWebhookStatus, setTestWebhookStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
-  const [partner1Url, setPartner1Url] = useState(settings.partners[0].imageUrl);
-  const [partner1Name, setPartner1Name] = useState(settings.partners[0].name);
-  const [partner1Web, setPartner1Web] = useState(settings.partners[0].websiteUrl);
+  const [partner1Url, setPartner1Url] = useState(settings.partners[0]?.imageUrl || 'https://i.postimg.cc/28hfcQtN/FPTU-EN.png');
+  const [partner1Name, setPartner1Name] = useState(settings.partners[0]?.name || 'FPT University');
+  const [partner1Web, setPartner1Web] = useState(settings.partners[0]?.websiteUrl || 'https://quynhon.fpt.edu.vn');
 
-  const [partner2Url, setPartner2Url] = useState(settings.partners[1].imageUrl);
-  const [partner2Name, setPartner2Name] = useState(settings.partners[1].name);
-  const [partner2Web, setPartner2Web] = useState(settings.partners[1].websiteUrl);
-
-  const [partner3Url, setPartner3Url] = useState(settings.partners[2].imageUrl);
-  const [partner3Name, setPartner3Name] = useState(settings.partners[2].name);
-  const [partner3Web, setPartner3Web] = useState(settings.partners[2].websiteUrl);
+  const [partner2Url, setPartner2Url] = useState(settings.partners[1]?.imageUrl || 'https://i.postimg.cc/28hfcQtN/FPTU-EN.png');
+  const [partner2Name, setPartner2Name] = useState(settings.partners[1]?.name || '20 Năm FPT University');
+  const [partner2Web, setPartner2Web] = useState(settings.partners[1]?.websiteUrl || 'https://fpt.edu.vn');
 
   const [saveSuccess, setSaveSuccess] = useState(false);
 
@@ -194,24 +190,20 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
   const handleSaveSettings = (e: React.FormEvent) => {
     e.preventDefault();
-    const updatedPartners: [PartnerConfig, PartnerConfig, PartnerConfig] = [
+    const updatedPartners: PartnerConfig[] = [
       {
-        ...settings.partners[0],
+        id: settings.partners[0]?.id || 'partner-1',
         name: partner1Name,
+        role: settings.partners[0]?.role || 'Đơn vị Đào tạo & Chủ quản',
         imageUrl: partner1Url,
         websiteUrl: partner1Web
       },
       {
-        ...settings.partners[1],
+        id: settings.partners[1]?.id || 'partner-2',
         name: partner2Name,
+        role: settings.partners[1]?.role || 'Kỷ niệm 20 năm phát triển',
         imageUrl: partner2Url,
         websiteUrl: partner2Web
-      },
-      {
-        ...settings.partners[2],
-        name: partner3Name,
-        imageUrl: partner3Url,
-        websiteUrl: partner3Web
       }
     ];
 
@@ -946,14 +938,14 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 {/* Partner 1 */}
                 <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
-                  <span className="text-xs font-bold text-amber-300 uppercase">Vị Trí Đối Tác 1</span>
+                  <span className="text-xs font-bold text-amber-300 uppercase">Logo 1: FPT University</span>
                   
                   <div>
-                    <label className="block text-[11px] font-semibold text-slate-400 mb-1">Tên Đối Tác</label>
+                    <label className="block text-[11px] font-semibold text-slate-400 mb-1">Tên Đơn Vị</label>
                     <input
                       type="text"
                       value={partner1Name}
@@ -1001,10 +993,10 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
                 {/* Partner 2 */}
                 <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
-                  <span className="text-xs font-bold text-amber-300 uppercase">Vị Trí Đối Tác 2</span>
+                  <span className="text-xs font-bold text-amber-300 uppercase">Logo 2: 20 Năm FPT University</span>
                   
                   <div>
-                    <label className="block text-[11px] font-semibold text-slate-400 mb-1">Tên Đối Tác</label>
+                    <label className="block text-[11px] font-semibold text-slate-400 mb-1">Tên Đơn Vị</label>
                     <input
                       type="text"
                       value={partner2Name}
@@ -1042,57 +1034,6 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                       <img
                         src={partner2Url}
                         alt="Preview 2"
-                        referrerPolicy="no-referrer"
-                        className="max-h-full max-w-full object-contain"
-                        onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Partner 3 */}
-                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
-                  <span className="text-xs font-bold text-amber-300 uppercase">Vị Trí Đối Tác 3</span>
-                  
-                  <div>
-                    <label className="block text-[11px] font-semibold text-slate-400 mb-1">Tên Đối Tác</label>
-                    <input
-                      type="text"
-                      value={partner3Name}
-                      onChange={e => setPartner3Name(e.target.value)}
-                      className="w-full px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-white"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-semibold text-slate-400 mb-1">URL Hình Ảnh Logo</label>
-                    <input
-                      type="url"
-                      value={partner3Url}
-                      onChange={e => setPartner3Url(e.target.value)}
-                      placeholder="https://..."
-                      className="w-full px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-white"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-semibold text-slate-400 mb-1">Website URL</label>
-                    <input
-                      type="url"
-                      value={partner3Web}
-                      onChange={e => setPartner3Web(e.target.value)}
-                      placeholder="https://..."
-                      className="w-full px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs text-white"
-                    />
-                  </div>
-
-                  {/* Logo Preview */}
-                  <div className="pt-2">
-                    <span className="text-[10px] text-slate-500 block mb-1">Xem trước:</span>
-                    <div className="h-16 rounded-lg bg-black/40 border border-white/5 p-2 flex items-center justify-center overflow-hidden">
-                      <img
-                        src={partner3Url}
-                        alt="Preview 3"
                         referrerPolicy="no-referrer"
                         className="max-h-full max-w-full object-contain"
                         onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}

@@ -39,5 +39,5 @@ export interface AppSettings {
   eventSubtitle: string;
   eventDate: string;
   eventVenue: string;
-  partners: [PartnerConfig, PartnerConfig, PartnerConfig];
+  partners: PartnerConfig[];
 }

@@ -35,15 +35,18 @@ export const APPS_SCRIPT_TEMPLATE = `function doPost(e) {
   }
 }`;
 
+export const DEFAULT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycby4xN9KFhe0QrKKH0GzkUOKojxmZDZB1gNa5MBArlWTftfAWUB1pcuMikCjm641z4JV0A/exec";
+
 /**
- * Tự động gửi feedback lên Google Sheet thông qua Apps Script Webhook nếu có cấu hình
+ * Tự động gửi feedback lên Google Sheet thông qua Apps Script Webhook
  */
 export async function sendFeedbackToGoogleSheet(
   feedback: FeedbackItem,
   webhookUrl?: string
 ): Promise<{ success: boolean; error?: string }> {
-  if (!webhookUrl || !webhookUrl.trim()) {
-    // Chưa có Webhook, dữ liệu vẫn được lưu trữ trên ứng dụng và có thể copy 1-click vào Sheet
+  const targetUrl = (webhookUrl && webhookUrl.trim()) ? webhookUrl.trim() : DEFAULT_WEBHOOK_URL;
+
+  if (!targetUrl) {
     return { success: false, error: 'Chưa cấu hình Webhook URL' };
   }
 
@@ -63,9 +66,11 @@ export async function sendFeedbackToGoogleSheet(
     };
 
     // Google Apps Script requires mode: 'no-cors' from browser to avoid CORS redirect blocks
-    await fetch(webhookUrl.trim(), {
+    // keepalive: true ensures the request finishes even on mobile if the tab or state changes
+    await fetch(targetUrl, {
       method: 'POST',
       mode: 'no-cors',
+      keepalive: true,
       headers: {
         'Content-Type': 'text/plain;charset=utf-8',
       },

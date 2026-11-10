@@ -14,28 +14,21 @@ export const INITIAL_SETTINGS: AppSettings = {
   eventVenue: "Hội trường Penrose Hall - FPT University Quy Nhơn A.I Campus",
   isOpen: true,
   googleSheetUrl: "https://docs.google.com/spreadsheets/d/1LV6BTcTGk7xkNOShqHUWF5AsdFt9UMMOngkeroTGXm8/edit?gid=0#gid=0",
-  webhookUrl: "",
+  webhookUrl: "https://script.google.com/macros/s/AKfycby4xN9KFhe0QrKKH0GzkUOKojxmZDZB1gNa5MBArlWTftfAWUB1pcuMikCjm641z4JV0A/exec",
   partners: [
     {
       id: "partner-1",
       name: "FPT University",
       role: "Đơn vị Đào tạo & Chủ quản",
-      imageUrl: FPT_EDU_LOGO_SVG,
+      imageUrl: "https://i.postimg.cc/28hfcQtN/FPTU-EN.png",
       websiteUrl: "https://quynhon.fpt.edu.vn"
     },
     {
       id: "partner-2",
       name: "20 Năm FPT University",
       role: "Kỷ niệm 20 năm phát triển",
-      imageUrl: FPT_20YEARS_SVG,
+      imageUrl: "https://i.postimg.cc/28hfcQtN/FPTU-EN.png",
       websiteUrl: "https://fpt.edu.vn"
-    },
-    {
-      id: "partner-3",
-      name: "CLB & Đối Tác Chiến Lược",
-      role: "Đồng hành phát triển sinh viên",
-      imageUrl: CLUB_PARTNER_SVG,
-      websiteUrl: "https://quynhon.fpt.edu.vn"
     }
   ]
 };

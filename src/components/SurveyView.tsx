@@ -20,7 +20,7 @@ interface SurveyViewProps {
   onBackToHome: () => void;
   onSubmitSuccess: (item: FeedbackItem) => void;
   eventName: string;
-  partners: [import('../types/index.ts').PartnerConfig, import('../types/index.ts').PartnerConfig, import('../types/index.ts').PartnerConfig];
+  partners: import('../types/index.ts').PartnerConfig[];
   webhookUrl?: string;
 }
 
@@ -193,12 +193,12 @@ export const SurveyView: React.FC<SurveyViewProps> = ({
         {/* Survey Form Card */}
         <div className="rounded-2xl bg-[#090d22] border border-white/15 shadow-2xl shadow-black/60 overflow-hidden">
           
-          {/* HÀNG ĐẦU: 3 LOGO NGUYÊN BẢN (KHÔNG KHUNG) - Y HỆT ẢNH MẪU CHECK-IN */}
+          {/* HÀNG ĐẦU: 2 LOGO NGUYÊN BẢN (HOÀN TOÀN KHÔNG KHUNG) */}
           <div className="pt-6 pb-2 px-6 flex justify-center">
-            <div className="inline-flex items-center justify-center gap-3 sm:gap-6 px-4 sm:px-6 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/10 shadow-md">
+            <div className="inline-flex items-center justify-center gap-4 sm:gap-8 py-2">
               {partners.map((partner, index) => (
                 <React.Fragment key={partner.id || index}>
-                  {index > 0 && <div className="h-5 w-[1px] bg-white/20 shrink-0" />}
+                  {index > 0 && <div className="h-5 sm:h-7 w-[1px] bg-white/30 shrink-0" />}
                   <a
                     href={partner.websiteUrl || '#'}
                     target="_blank"
@@ -211,7 +211,7 @@ export const SurveyView: React.FC<SurveyViewProps> = ({
                         src={partner.imageUrl}
                         alt={partner.name || `Logo ${index + 1}`}
                         referrerPolicy="no-referrer"
-                        className="h-7 sm:h-8 w-auto max-w-[110px] sm:max-w-[130px] object-contain"
+                        className="h-8 sm:h-10 w-auto max-w-[120px] sm:max-w-[150px] object-contain drop-shadow"
                       />
                     ) : (
                       <span className="text-xs font-semibold text-slate-300">{partner.name}</span>
