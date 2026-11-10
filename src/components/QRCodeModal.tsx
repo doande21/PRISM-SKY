@@ -54,7 +54,7 @@ export const QRCodeModal: React.FC<QRCodeModalProps> = ({
     link.click();
   };
 
-  // Fullscreen Presentation Mode for Penrose Hall Projector / LED Screen
+  // Fullscreen Presentation Mode for Sảnh Penrose Projector / LED Screen
   if (isFullscreenMode) {
     return (
       <div className="fixed inset-0 z-50 bg-[#040614] flex flex-col items-center justify-center p-6 text-white animate-in fade-in">
@@ -70,7 +70,7 @@ export const QRCodeModal: React.FC<QRCodeModalProps> = ({
         <div className="text-center max-w-3xl mx-auto mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/20 text-xs font-bold text-amber-300 uppercase tracking-widest mb-3">
             <Sparkles className="w-3.5 h-3.5" />
-            FPT University Quy Nhơn · Penrose Hall
+            FPT University Quy Nhơn · Sảnh Penrose
           </div>
           <h1 className="font-cinzel text-3xl sm:text-5xl font-black text-white tracking-tight uppercase">
             Quét Mã QR Để Gửi Ý Kiến Đóng Góp

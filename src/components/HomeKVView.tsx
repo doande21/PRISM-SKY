@@ -114,7 +114,7 @@ export const HomeKVView: React.FC<HomeKVViewProps> = ({
           </span>
           <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10">
             <MapPin className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Penrose Hall · AI Campus</span>
+            <span>Sảnh Penrose · AI Campus</span>
           </span>
           <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10">
             <Award className="w-3.5 h-3.5 text-yellow-400" />

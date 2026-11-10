@@ -11,7 +11,7 @@ export const INITIAL_SETTINGS: AppSettings = {
   eventName: "LỄ TÔN VINH SINH VIÊN - PRISM SKY",
   eventSubtitle: "Student Achievement Awards Summer 2026",
   eventDate: "25/11/2026 - 18:00 (Thứ Tư)",
-  eventVenue: "Hội trường Penrose Hall - FPT University Quy Nhơn A.I Campus",
+  eventVenue: "Sảnh Penrose - FPT University Quy Nhơn A.I Campus",
   isOpen: true,
   googleSheetUrl: "https://docs.google.com/spreadsheets/d/1LV6BTcTGk7xkNOShqHUWF5AsdFt9UMMOngkeroTGXm8/edit?gid=0#gid=0",
   webhookUrl: "https://script.google.com/macros/s/AKfycby4xN9KFhe0QrKKH0GzkUOKojxmZDZB1gNa5MBArlWTftfAWUB1pcuMikCjm641z4JV0A/exec",
@@ -48,9 +48,9 @@ export const INITIAL_FEEDBACKS: FeedbackItem[] = [
       content: 5,
       hospitality: 4
     },
-    feedbackCurrent: "Sân khấu Penrose Hall đợt này hiệu ứng visual Prism Sky cực kỳ mãn nhãn và xúc động! Khoảnh khắc nhận Cóc Vàng thực sự là kỷ niệm đẹp nhất đời sinh viên.",
+    feedbackCurrent: "Sân khấu Sảnh Penrose đợt này hiệu ứng visual Prism Sky cực kỳ mãn nhãn và xúc động! Khoảnh khắc nhận Cóc Vàng thực sự là kỷ niệm đẹp nhất đời sinh viên.",
     feedbackFuture: "Kỳ sau BTC có thể mở thêm màn chiếu livestream tương tác trực tiếp lời chúc từ gia đình ở xa lên màn hình LED chính thì sẽ càng tuyệt vời hơn nữa. Concept gợi ý: Cyberpunk Aurora hoặc Odyssey to Mars.",
-    selectedTags: ["Tự Hào Cóc Vàng", "PRISM SKY Rực Rỡ", "Penrose Hall Mãn Nhãn"],
+    selectedTags: ["Tự Hào Cóc Vàng", "PRISM SKY Rực Rỡ", "Sảnh Penrose Mãn Nhãn"],
     luckyCode: "PRISM-1082",
     isFeatured: true
   },
@@ -119,7 +119,7 @@ export const INITIAL_FEEDBACKS: FeedbackItem[] = [
 export const QUICK_TAGS = [
   "🌟 PRISM SKY Rực Rỡ",
   "🐸 Tự Hào Cóc Vàng",
-  "🏛️ Penrose Hall Mãn Nhãn",
+  "🏛️ Sảnh Penrose Mãn Nhãn",
   "🚀 Khát Vọng Tiên Phong",
   "🇻🇳 Vươn Mình Cùng Đất Nước",
   "🔥 Cháy Hết Đam Mê",

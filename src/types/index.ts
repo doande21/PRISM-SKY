@@ -1,7 +1,7 @@
 export interface RatingBreakdown {
   overall: number; // 1-5
   organization: number; // 1-5 (Đón tiếp & Check-in)
-  stage: number; // 1-5 (Sân khấu, âm thanh, ánh sáng Penrose Hall)
+  stage: number; // 1-5 (Sân khấu, âm thanh, ánh sáng Sảnh Penrose)
   content: number; // 1-5 (Kịch bản & Nghi thức tôn vinh)
   hospitality: number; // 1-5 (Hậu cần, quà tặng, tiệc)
 }

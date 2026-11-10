@@ -75,7 +75,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenFeedback }) =>
           ))}
         </div>
 
-        {/* Penrose Hall Highlight Banner */}
+        {/* Sảnh Penrose Highlight Banner */}
         <div className="mt-12 p-8 rounded-3xl bg-gradient-to-r from-indigo-950/60 via-purple-950/40 to-slate-900/60 border border-indigo-500/20 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
             <span className="text-xs font-bold text-amber-300 uppercase tracking-widest">

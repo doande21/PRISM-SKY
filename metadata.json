@@ -1,6 +1,6 @@
 {
   "name": "Lễ Tôn Vinh PRISM SKY - FPT University Quy Nhơn",
-  "description": "Cổng thông tin & Khảo sát ý kiến người tham dự Lễ Tôn Vinh Sinh Viên - PRISM SKY tại Đại học FPT Phân hiệu Quy Nhơn.",
+  "description": "Cổng thông tin & Khảo sát ý kiến người tham dự Lễ Tôn Vinh Sinh Viên - PRISM SKY tại Đại học FPT cơ sở Quy Nhơn.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

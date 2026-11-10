@@ -12,7 +12,7 @@ export const Footer: React.FC<FooterProps> = ({ eventName }) => {
           {eventName}
         </div>
         <div className="mt-1 text-[11px] text-slate-400">
-          Trường Đại học FPT Phân hiệu Quy Nhơn · Hội trường Penrose Hall
+          Trường Đại học FPT cơ sở Quy Nhơn · Sảnh Penrose
         </div>
         <div className="mt-2 text-[10px] text-slate-400">
           © 2026 Đại học FPT Quy Nhơn · Mọi phản hồi được tổng hợp trực tiếp đến Ban Tổ Chức

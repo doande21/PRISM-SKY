@@ -52,7 +52,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
               <MapPin className="w-4 h-4 text-cyan-400" />
-              <span>Hội trường Penrose Hall · AI Campus</span>
+              <span>Sảnh Penrose · AI Campus</span>
             </div>
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
               <Award className="w-4 h-4 text-yellow-400" />
@@ -84,7 +84,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     <Sparkles className="w-4 h-4 text-amber-300" />
                     <span className="font-semibold text-white tracking-wide">Key Visual Chính Thức LTV</span>
                   </div>
-                  <span className="text-[11px] text-slate-400 font-mono">Penrose Hall 2026</span>
+                  <span className="text-[11px] text-slate-400 font-mono">Sảnh Penrose 2026</span>
                 </div>
               </div>
             </div>

@@ -318,7 +318,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
               )}
 
               {renderStarPicker(
-                '3. Visual, Âm thanh & Ánh sáng tại Penrose Hall',
+                '3. Visual, Âm thanh & Ánh sáng tại Sảnh Penrose',
                 'Hiệu ứng sân khấu pha lê, visual LED và âm nhạc',
                 stageRating,
                 setStageRating

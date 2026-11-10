@@ -338,7 +338,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                 </span>
               </div>
               <p className="text-xs text-slate-400">
-                FPT University Quy Nhơn · Hội trường Penrose Hall
+                FPT University Quy Nhơn · Sảnh Penrose
               </p>
             </div>
           </div>
@@ -457,7 +457,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                   </span>
                   <span className="text-sm text-slate-400">/ 5.0</span>
                 </div>
-                <div className="mt-1 text-[11px] text-slate-500">Penrose Hall hiệu ứng Prism</div>
+                <div className="mt-1 text-[11px] text-slate-500">Sảnh Penrose hiệu ứng Prism</div>
               </div>
 
             </div>
@@ -494,7 +494,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
                   <div>
                     <div className="flex justify-between text-slate-300 mb-1">
-                      <span>3. Visual, Âm thanh, Ánh sáng Penrose Hall</span>
+                      <span>3. Visual, Âm thanh, Ánh sáng Sảnh Penrose</span>
                       <span className="font-mono font-bold text-cyan-300">{stats.avgStage} / 5.0</span>
                     </div>
                     <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">

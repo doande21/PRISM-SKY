@@ -372,7 +372,7 @@ export const SurveyView: React.FC<SurveyViewProps> = ({
                 )}
 
                 {renderStarPicker(
-                  '3. Âm thanh, ánh sáng & Visual Penrose Hall',
+                  '3. Âm thanh, ánh sáng & Visual Sảnh Penrose',
                   'Hiệu ứng sân khấu pha lê, visual LED và âm nhạc',
                   stageRating,
                   setStageRating
