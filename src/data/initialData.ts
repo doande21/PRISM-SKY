@@ -13,7 +13,7 @@ export const INITIAL_SETTINGS: AppSettings = {
   eventDate: "25/11/2026 - 18:00 (Thứ Tư)",
   eventVenue: "Hội trường Penrose Hall - FPT University Quy Nhơn A.I Campus",
   isOpen: true,
-  googleSheetUrl: "https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit",
+  googleSheetUrl: "https://docs.google.com/spreadsheets/d/1LV6BTcTGk7xkNOShqHUWF5AsdFt9UMMOngkeroTGXm8/edit?gid=0#gid=0",
   webhookUrl: "",
   partners: [
     {

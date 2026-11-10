@@ -118,6 +118,7 @@ export default function App() {
             onSubmitSuccess={handleSubmitSuccess}
             eventName={settings.eventName}
             partners={settings.partners}
+            webhookUrl={settings.webhookUrl}
           />
         )}
       </main>

@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { FeedbackItem, AppSettings, PartnerConfig } from '../types/index.ts';
 import { exportFeedbacksToCSV, exportFeedbacksQuickCSV, copyForGoogleSheets } from '../utils/exportCsv.ts';
+import { APPS_SCRIPT_TEMPLATE, USER_TARGET_SHEET_URL, sendFeedbackToGoogleSheet } from '../utils/googleSheetSync.ts';
 import { 
   Shield, 
   X, 
@@ -24,7 +25,8 @@ import {
   MessageSquare,
   Eye,
   CheckCircle2,
-  AlertTriangle
+  AlertTriangle,
+  Send
 } from 'lucide-react';
 
 interface AdminPortalProps {
@@ -63,9 +65,13 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   // Copy status
   const [copiedSheetData, setCopiedSheetData] = useState(false);
 
-  // Settings form local state
-  const [sheetUrlInput, setSheetUrlInput] = useState(settings.googleSheetUrl);
+  const [sheetUrlInput, setSheetUrlInput] = useState(settings.googleSheetUrl || USER_TARGET_SHEET_URL);
+  const [webhookUrlInput, setWebhookUrlInput] = useState(settings.webhookUrl || '');
   const [isOpenSurvey, setIsOpenSurvey] = useState(settings.isOpen);
+  const [copiedScript, setCopiedScript] = useState(false);
+  const [isTestingWebhook, setIsTestingWebhook] = useState(false);
+  const [testWebhookStatus, setTestWebhookStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
   const [partner1Url, setPartner1Url] = useState(settings.partners[0].imageUrl);
   const [partner1Name, setPartner1Name] = useState(settings.partners[0].name);
   const [partner1Web, setPartner1Web] = useState(settings.partners[0].websiteUrl);
@@ -212,12 +218,48 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
     onUpdateSettings({
       ...settings,
       googleSheetUrl: sheetUrlInput.trim(),
+      webhookUrl: webhookUrlInput.trim(),
       isOpen: isOpenSurvey,
       partners: updatedPartners
     });
 
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 2500);
+  };
+
+  const handleCopyScript = () => {
+    navigator.clipboard.writeText(APPS_SCRIPT_TEMPLATE);
+    setCopiedScript(true);
+    setTimeout(() => setCopiedScript(false), 2500);
+  };
+
+  const handleTestWebhook = async () => {
+    if (!webhookUrlInput.trim()) {
+      setTestWebhookStatus({ type: 'error', message: 'Vui lòng dán Webhook URL trước khi thử nghiệm' });
+      return;
+    }
+    setIsTestingWebhook(true);
+    setTestWebhookStatus(null);
+    try {
+      const res = await sendFeedbackToGoogleSheet({
+        id: `test-${Date.now()}`,
+        createdAt: new Date().toISOString(),
+        fullName: 'Nguyễn Văn Test',
+        studentId: 'QE179999',
+        role: 'student',
+        ratings: { overall: 5, organization: 5, stage: 5, content: 5, hospitality: 5 },
+        feedbackCurrent: 'Dòng test tự động map vào sheet FEEDBACK LTV từ hệ thống',
+        feedbackFuture: 'Gợi ý concept kỳ sau',
+        selectedTags: ['PRISM SKY Rực Rỡ'],
+        luckyCode: 'TEST-8888'
+      }, webhookUrlInput.trim());
+
+      setTestWebhookStatus({ type: 'success', message: 'Đã gửi dòng dữ liệu thử nghiệm! Hãy kiểm tra sheet FEEDBACK LTV của bạn.' });
+    } catch (err: any) {
+      setTestWebhookStatus({ type: 'error', message: err?.message || 'Gửi thất bại' });
+    } finally {
+      setIsTestingWebhook(false);
+    }
   };
 
   // If not logged in yet, show auth gate
@@ -755,48 +797,141 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
         {activeTab === 'settings' && (
           <form onSubmit={handleSaveSettings} className="p-6 space-y-6 overflow-y-auto">
             
-            {/* Sheet Link Config (Requirement 1) */}
-            <div className="p-5 rounded-xl bg-white/[0.03] border border-white/10 space-y-4">
-              <div className="flex items-center justify-between">
-                <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                  <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
-                  Liên Kết Bảng Google Sheet Của Ban Tổ Chức
-                </h4>
+            {/* Google Sheet Direct Mapping & Webhook Section */}
+            <div className="p-5 rounded-xl bg-white/[0.03] border border-emerald-500/20 space-y-5">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="p-2 rounded-lg bg-emerald-500/20 text-emerald-400">
+                    <FileSpreadsheet className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                      Đồng Bộ & Map Dữ Liệu Vào Sheet: FEEDBACK LTV
+                    </h4>
+                    <p className="text-xs text-slate-400">
+                      Map 3 cột A (Họ và tên), B (MSSV), C (Ý kiến đóng góp) tự động hoặc 1 chạm
+                    </p>
+                  </div>
+                </div>
+
                 <a
-                  href={settings.googleSheetUrl}
+                  href={sheetUrlInput || USER_TARGET_SHEET_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1 underline"
+                  className="px-3.5 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 text-xs font-semibold flex items-center gap-1.5 transition-colors"
                 >
-                  <span>Mở Google Sheet BTC</span>
-                  <ExternalLink className="w-3 h-3" />
+                  <span>Mở Google Sheet FEEDBACK LTV</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>
 
-              <p className="text-xs text-slate-400">
-                Nhập đường dẫn Google Sheet hoặc Google Form/Apps Script để Ban Tổ Chức tiện theo dõi và đồng bộ dữ liệu.
-              </p>
-
+              {/* Đường dẫn Sheet */}
               <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  URL Trang Tính Google Sheet Của Bạn:
+                </label>
                 <input
                   type="url"
                   value={sheetUrlInput}
                   onChange={e => setSheetUrlInput(e.target.value)}
                   placeholder="https://docs.google.com/spreadsheets/d/.../edit"
-                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-400/50 font-mono"
                 />
               </div>
 
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={handleCopySheets}
-                  className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold flex items-center gap-2 transition-colors cursor-pointer"
-                >
-                  <Copy className="w-3.5 h-3.5 text-amber-300" />
-                  <span>Sao chép toàn bộ dữ liệu để Paste vào Google Sheet</span>
-                </button>
+              {/* PHƯƠNG THỨC 1: TỰ ĐỘNG THỜI GIAN THỰC (REAL-TIME APPS SCRIPT WEBHOOK) */}
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-amber-300 uppercase tracking-wide flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    Cách 1: Tự Động Map Thời Gian Thực (Khi Sinh Viên Bấm Gửi Sẽ Vào Ngay Sheet)
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleCopyScript}
+                    className="text-xs font-semibold px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition-colors flex items-center gap-1.5 cursor-pointer"
+                  >
+                    {copiedScript ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copiedScript ? 'Đã Chép Mã Apps Script!' : 'Sao Chép Đoạn Mã Apps Script'}</span>
+                  </button>
+                </div>
+
+                <div className="text-[11px] text-slate-300 space-y-1 bg-black/30 p-3 rounded-lg border border-white/5">
+                  <div className="font-semibold text-amber-200 mb-1">Hướng dẫn cài đặt trong 30 giây:</div>
+                  <p>1. Trong Google Sheet <strong>FEEDBACK LTV</strong>, bấm menu <strong>Tiện ích mở rộng (Extensions)</strong> &gt; <strong>Apps Script</strong>.</p>
+                  <p>2. Xóa hết mã có sẵn trong đó, bấm nút <strong>"Sao Chép Đoạn Mã Apps Script"</strong> ở trên rồi <strong>Ctrl+V</strong> vào, bấm <strong>Lưu</strong> (Ctrl+S).</p>
+                  <p>3. Bấm <strong>Triển khai (Deploy)</strong> ở góc trên bên phải &gt; <strong>Triển khai dưới dạng ứng dụng web (New deployment &gt; Web app)</strong>:</p>
+                  <p className="pl-4 text-slate-400">• Người có quyền truy cập (Who has access): Chọn <strong>Bất kỳ ai (Anyone)</strong>.</p>
+                  <p>4. Bấm <strong>Triển khai</strong>, cấp quyền rồi sao chép <strong>URL Ứng Dụng Web</strong> dán vào ô bên dưới:</p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <input
+                    type="url"
+                    value={webhookUrlInput}
+                    onChange={e => setWebhookUrlInput(e.target.value)}
+                    placeholder="Dán URL Webhook Apps Script (VD: https://script.google.com/macros/s/.../exec)"
+                    className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-400/50 font-mono"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleTestWebhook}
+                    disabled={isTestingWebhook}
+                    className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold whitespace-nowrap transition-colors flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  >
+                    {isTestingWebhook ? (
+                      <span>Đang gửi thử...</span>
+                    ) : (
+                      <>
+                        <Send className="w-3.5 h-3.5 text-amber-300" />
+                        <span>Gửi Thử 1 Dòng Vào Sheet</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {testWebhookStatus && (
+                  <div className={`p-2.5 rounded-lg text-xs flex items-center gap-2 ${
+                    testWebhookStatus.type === 'success' 
+                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' 
+                      : 'bg-red-500/20 text-red-300 border border-red-500/30'
+                  }`}>
+                    {testWebhookStatus.type === 'success' ? <CheckCircle2 className="w-4 h-4 shrink-0" /> : <AlertTriangle className="w-4 h-4 shrink-0" />}
+                    <span>{testWebhookStatus.message}</span>
+                  </div>
+                )}
               </div>
+
+              {/* PHƯƠNG THỨC 2: SAO CHÉP NHANH 1 CLICK DÁN VÀO A1 */}
+              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div>
+                  <div className="text-xs font-bold text-white">Cách 2: Sao Chép Nhanh Dán Vào Ô A1</div>
+                  <div className="text-[11px] text-slate-400 mt-0.5">
+                    Bấm nút bên cạnh, sau đó mở Sheet FEEDBACK LTV chọn ô <strong>A1</strong> và bấm <strong>Ctrl + V</strong> là xong ngay lập tức!
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 w-full sm:w-auto">
+                  <button
+                    type="button"
+                    onClick={handleCopySheets}
+                    className="flex-1 sm:flex-initial px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md"
+                  >
+                    {copiedSheetData ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copiedSheetData ? 'Đã Chép Xong! Bấm Ctrl+V vào ô A1' : 'Sao Chép 3 Cột (A, B, C)'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => exportFeedbacksQuickCSV(feedbacks)}
+                    className="flex-1 sm:flex-initial px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Download className="w-3.5 h-3.5 text-amber-300" />
+                    <span>Tải CSV 3 Cột</span>
+                  </button>
+                </div>
+              </div>
+
             </div>
 
             {/* 3 STRATEGIC PARTNER LOGO SLOTS CONFIG (Requirement 3) */}

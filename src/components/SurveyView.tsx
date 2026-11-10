@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FeedbackItem, ParticipantRole } from '../types/index.ts';
 import { QUICK_TAGS } from '../data/initialData.ts';
+import { sendFeedbackToGoogleSheet } from '../utils/googleSheetSync.ts';
 import { 
   ArrowLeft, 
   Send, 
@@ -20,13 +21,15 @@ interface SurveyViewProps {
   onSubmitSuccess: (item: FeedbackItem) => void;
   eventName: string;
   partners: [import('../types/index.ts').PartnerConfig, import('../types/index.ts').PartnerConfig, import('../types/index.ts').PartnerConfig];
+  webhookUrl?: string;
 }
 
 export const SurveyView: React.FC<SurveyViewProps> = ({
   onBackToHome,
   onSubmitSuccess,
   eventName,
-  partners
+  partners,
+  webhookUrl
 }) => {
   const [fullName, setFullName] = useState('');
   const [studentId, setStudentId] = useState('');
@@ -103,7 +106,14 @@ export const SurveyView: React.FC<SurveyViewProps> = ({
       luckyCode
     };
 
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // Tự động map và gửi dữ liệu lên Google Sheet nếu có Webhook cấu hình
+    if (webhookUrl) {
+      sendFeedbackToGoogleSheet(newFeedback, webhookUrl).catch(err => {
+        console.warn('Sync to Google Sheet in background failed:', err);
+      });
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 400));
     setIsSubmitting(false);
     onSubmitSuccess(newFeedback);
   };

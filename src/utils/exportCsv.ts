@@ -103,23 +103,19 @@ export function exportFeedbacksQuickCSV(feedbacks: FeedbackItem[], filename = 'F
   URL.revokeObjectURL(url);
 }
 
-// Copy as tab-separated data for direct paste into Google Sheets
+// Copy as tab-separated data for direct paste into Google Sheet A1:C1
 export function copyForGoogleSheets(feedbacks: FeedbackItem[]): string {
-  const headers = [
-    'Họ và tên',
-    'MSSV',
-    'Ý kiến đóng góp',
-    'Concept kỳ sau',
-    'Điểm tổng quan'
-  ];
+  const headers = ['Họ và tên', 'MSSV', 'Ý kiến đóng góp'];
 
   const rows = feedbacks.map((fb) => {
+    const combinedFeedback = fb.feedbackFuture && fb.feedbackFuture !== 'Chưa có ý tưởng bổ sung'
+      ? `${fb.feedbackCurrent} (Concept kỳ sau: ${fb.feedbackFuture})`
+      : fb.feedbackCurrent;
+
     return [
       fb.fullName,
       fb.studentId,
-      fb.feedbackCurrent.replace(/\t|\r|\n/g, ' '),
-      (fb.feedbackFuture || '').replace(/\t|\r|\n/g, ' '),
-      fb.ratings.overall
+      combinedFeedback.replace(/\t|\r|\n/g, ' ')
     ].join('\t');
   });
 
