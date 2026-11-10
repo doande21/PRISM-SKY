@@ -73,7 +73,7 @@ export const QRCodeModal: React.FC<QRCodeModalProps> = ({
             FPT University Quy Nhơn · Penrose Hall
           </div>
           <h1 className="font-cinzel text-3xl sm:text-5xl font-black text-white tracking-tight uppercase">
-            Quét Mã QR Góp Ý & Nhận Quà Lucky Draw
+            Quét Mã QR Để Gửi Ý Kiến Đóng Góp
           </h1>
           <p className="mt-2 text-base text-slate-300">
             Lễ Tôn Vinh Sinh Viên - PRISM SKY Summer 2026

@@ -57,27 +57,26 @@ export const HomeKVView: React.FC<HomeKVViewProps> = ({
       {/* Main Single KV & Feedback Hero Area */}
       <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center text-center">
         
-        {/* HÀNG ĐẦU: 3 LOGO ĐỐI TÁC NGUYÊN BẢN (KHÔNG ĐỂ KHUNG) */}
+        {/* HÀNG ĐẦU: 3 LOGO ĐỐI TÁC NGUYÊN BẢN (HOÀN TOÀN KHÔNG ĐỂ KHUNG) */}
         <div className="mb-4 sm:mb-5 w-full flex justify-center">
-          <div className="inline-flex items-center justify-center gap-3 sm:gap-6 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 shadow-lg">
+          <div className="inline-flex items-center justify-center gap-4 sm:gap-8 py-2">
             {partners.map((partner, index) => (
               <React.Fragment key={partner.id || index}>
                 {index > 0 && (
-                  <div className="h-5 sm:h-6 w-[1px] bg-white/20 shrink-0" />
+                  <div className="h-5 sm:h-7 w-[1px] bg-white/30 shrink-0" />
                 )}
                 <a
                   href={partner.websiteUrl || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
-                  title={partner.name}
-                  className="flex items-center justify-center hover:opacity-85 transition-opacity"
+                  className="flex items-center justify-center hover:opacity-80 transition-opacity"
                 >
                   {partner.imageUrl ? (
                     <img
                       src={partner.imageUrl}
                       alt={partner.name || `Logo đối tác ${index + 1}`}
                       referrerPolicy="no-referrer"
-                      className="h-7 sm:h-9 w-auto max-w-[110px] sm:max-w-[140px] object-contain"
+                      className="h-8 sm:h-10 w-auto max-w-[120px] sm:max-w-[160px] object-contain drop-shadow"
                       onError={(e) => {
                         (e.target as HTMLElement).style.display = 'none';
                       }}
@@ -93,7 +92,7 @@ export const HomeKVView: React.FC<HomeKVViewProps> = ({
           </div>
         </div>
 
-        {/* PROMINENT EVENT TITLE (Requirement 5) */}
+        {/* PROMINENT EVENT TITLE */}
         <h1 className="font-cinzel text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-white uppercase drop-shadow-2xl">
           Lễ Tôn Vinh Sinh Viên
           <span className="block mt-1 font-outfit text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-cyan-200 to-indigo-300 tracking-wider">
@@ -123,11 +122,10 @@ export const HomeKVView: React.FC<HomeKVViewProps> = ({
           </span>
         </div>
 
-        {/* CENTERPIECE: KEY VISUAL POSTER NGUYÊN BẢN (KHÔNG BỊ CẮT CHỮ) */}
+        {/* CENTERPIECE: KEY VISUAL POSTER NGUYÊN BẢN (KHÔNG BỊ CẮT CHỮ, BÍ MẬT 3 TAP MỞ ADMIN) */}
         <div 
           onClick={handleKVClick}
           className="relative mt-4 sm:mt-5 group w-full max-w-sm sm:max-w-md md:max-w-lg cursor-pointer select-none"
-          title="Nhấn 3 lần liên tục để mở Cổng Quản Trị BTC"
         >
           {/* Prismatic aura glow */}
           <div className="absolute -inset-1.5 rounded-2xl bg-gradient-to-r from-amber-400 via-cyan-400 to-indigo-500 opacity-60 blur-lg group-hover:opacity-85 transition duration-700" />

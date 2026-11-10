@@ -4,7 +4,7 @@ import { FeedbackItem } from '../types/index.ts';
 export function exportFeedbacksToCSV(feedbacks: FeedbackItem[], filename = 'FPTU_QuyNhon_Feedback_LTV_PRISM_SKY_ChiTiet.csv') {
   const headers = [
     'STT',
-    'Mã May Mắn',
+    'Mã Phản Hồi',
     'Thời Gian Gửi',
     'Họ và Tên',
     'MSSV',

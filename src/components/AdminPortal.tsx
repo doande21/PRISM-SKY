@@ -675,7 +675,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
                   <tr className="border-b border-white/10 bg-white/5 text-slate-400 uppercase tracking-wider text-[11px]">
-                    <th className="py-3 px-4">Thời gian / Vé</th>
+                    <th className="py-3 px-4">Thời gian</th>
                     <th className="py-3 px-4">Họ và Tên</th>
                     <th className="py-3 px-4">MSSV / Ngành</th>
                     <th className="py-3 px-4 text-center">Đánh giá</th>
@@ -1162,7 +1162,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
 
             <div className="space-y-3 text-xs">
               <div className="flex justify-between p-2.5 rounded-lg bg-white/5">
-                <span className="text-slate-400">Vé May Mắn:</span>
+                <span className="text-slate-400">Mã Gửi:</span>
                 <span className="font-mono font-bold text-amber-300">{selectedFeedback.luckyCode}</span>
               </div>
               <div className="flex justify-between p-2.5 rounded-lg bg-white/5">
