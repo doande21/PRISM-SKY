@@ -8,8 +8,8 @@ import { QRCodeModal } from './components/QRCodeModal.tsx';
 import { AdminPortal } from './components/AdminPortal.tsx';
 import { Footer } from './components/Footer.tsx';
 
-const STORAGE_KEY_FEEDBACKS = 'fpt_ltv_feedbacks_v6';
-const STORAGE_KEY_SETTINGS = 'fpt_ltv_settings_v6';
+const STORAGE_KEY_FEEDBACKS = 'fpt_ltv_feedbacks_v7';
+const STORAGE_KEY_SETTINGS = 'fpt_ltv_settings_v7';
 
 export default function App() {
   // Navigation view state: 'home' (Duy nhất KV & nút Feedback ngay) | 'survey' (Form khảo sát chuyên biệt)

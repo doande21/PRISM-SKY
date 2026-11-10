@@ -76,7 +76,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
   const [partner1Name, setPartner1Name] = useState(settings.partners[0]?.name || 'FPT University');
   const [partner1Web, setPartner1Web] = useState(settings.partners[0]?.websiteUrl || 'https://quynhon.fpt.edu.vn');
 
-  const [partner2Url, setPartner2Url] = useState(settings.partners[1]?.imageUrl || 'https://i.postimg.cc/28hfcQtN/FPTU-EN.png');
+  const [partner2Url, setPartner2Url] = useState(settings.partners[1]?.imageUrl || 'https://i.postimg.cc/TwLsyGML/Logo-cam-eng-01.png');
   const [partner2Name, setPartner2Name] = useState(settings.partners[1]?.name || '20 Năm FPT University');
   const [partner2Web, setPartner2Web] = useState(settings.partners[1]?.websiteUrl || 'https://fpt.edu.vn');
 

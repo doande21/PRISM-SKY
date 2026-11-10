@@ -27,7 +27,7 @@ export const INITIAL_SETTINGS: AppSettings = {
       id: "partner-2",
       name: "20 Năm FPT University",
       role: "Kỷ niệm 20 năm phát triển",
-      imageUrl: "https://i.postimg.cc/28hfcQtN/FPTU-EN.png",
+      imageUrl: "https://i.postimg.cc/TwLsyGML/Logo-cam-eng-01.png",
       websiteUrl: "https://fpt.edu.vn"
     }
   ]
