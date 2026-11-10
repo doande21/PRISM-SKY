@@ -8,8 +8,8 @@ import { QRCodeModal } from './components/QRCodeModal.tsx';
 import { AdminPortal } from './components/AdminPortal.tsx';
 import { Footer } from './components/Footer.tsx';
 
-const STORAGE_KEY_FEEDBACKS = 'fpt_ltv_feedbacks_v2';
-const STORAGE_KEY_SETTINGS = 'fpt_ltv_settings_v2';
+const STORAGE_KEY_FEEDBACKS = 'fpt_ltv_feedbacks_v4';
+const STORAGE_KEY_SETTINGS = 'fpt_ltv_settings_v4';
 
 export default function App() {
   // Navigation view state: 'home' (Duy nhất KV & nút Feedback ngay) | 'survey' (Form khảo sát chuyên biệt)
@@ -33,7 +33,13 @@ export default function App() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_SETTINGS);
       if (stored) {
-        return JSON.parse(stored);
+        const parsed = JSON.parse(stored);
+        return {
+          ...INITIAL_SETTINGS,
+          ...parsed,
+          googleSheetUrl: parsed.googleSheetUrl || INITIAL_SETTINGS.googleSheetUrl,
+          partners: INITIAL_SETTINGS.partners
+        };
       }
     } catch (e) {
       console.error('Failed reading settings from localStorage', e);
